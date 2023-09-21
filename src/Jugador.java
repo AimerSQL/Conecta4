@@ -6,8 +6,8 @@ public class Jugador {
     }
 
     public static boolean isValidMove(char[][] board, int col) {
-        if (col < 0 || col >= board[0].length) {
-            System.out.println("Movimiento incorrecto, por favor elige una columna entre 1 - " + board[0].length);
+        if (col < 0 || col >= board[0].length ){
+            System.out.println("Movimiento incorrecto, por favor elige una número entre 1 - " + board[0].length);
             return false;
         }
         return board[0][col] == ' ';

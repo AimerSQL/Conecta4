@@ -6,17 +6,26 @@ public class ConnectFour {
         tablero.initializeBoard();
         Jugador jugador = new Jugador();
         Scanner scanner = new Scanner(System.in);
-        try{
+
         while (!Check.getGameWon() && tablero.move()) {
             tablero.displayBoard();
-
             int colChoice = 0;
-
-                do {
+            boolean validInput = false;
+            do {
+                try {
                     System.out.println("Jugador " + jugador.currentPlayer + ", elige una columna (1-" + tablero.col + "): ");
-                    colChoice = scanner.nextInt() - 1;
-
-                } while (!Jugador.isValidMove(tablero.board, colChoice));
+                    if (scanner.hasNextInt()) {
+                        colChoice = scanner.nextInt() - 1;
+                        validInput = Jugador.isValidMove(tablero.board, colChoice);
+                    } else {
+                        System.out.println("ERROR: Ingresa un número entero válido.");
+                        scanner.next(); // Clear the non-integer input
+                    }
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("ERROR: Ingresa un número entero válido.");
+                    scanner.next(); // Clear the invalid input
+                }
+            } while (!validInput);
 
 
             Jugador.makeMove(tablero.board, colChoice, jugador.currentPlayer);
@@ -24,10 +33,7 @@ public class ConnectFour {
             jugador.winner = jugador.currentPlayer;
             jugador.switchPlayer();
             tablero.addMove();
-        }}catch (Exception error){
-            System.out.println("error :" + error);
         }
-
         tablero.displayBoard();
 
         if (Check.getGameWon()) {
