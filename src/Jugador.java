@@ -1,6 +1,5 @@
 public class Jugador {
     char currentPlayer ;
-
     char winner;
     public Jugador() {
         this.currentPlayer= 'X';
@@ -8,6 +7,7 @@ public class Jugador {
 
     public static boolean isValidMove(char[][] board, int col) {
         if (col < 0 || col >= board[0].length) {
+            System.out.println("Movimiento incorrecto, por favor elige una columna entre 1 - " + board[0].length);
             return false;
         }
         return board[0][col] == ' ';
@@ -20,5 +20,9 @@ public class Jugador {
                 break;
             }
         }
+    }
+
+    public void switchPlayer() {
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
     }
 }

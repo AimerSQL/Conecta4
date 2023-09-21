@@ -4,6 +4,7 @@ public class Tablero {
     char[][] board ;
     int col = 7;
     int row = 6;
+    int moves;
 
     public Tablero() {
         this.board = new char[row][col];
@@ -23,5 +24,13 @@ public class Tablero {
             }
             System.out.println("|");
         }
+    }
+
+    public boolean move(){
+       return  this.moves < col * row;
+    }
+
+    public void addMove(){
+        this.moves++;
     }
 }

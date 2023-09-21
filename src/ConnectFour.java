@@ -5,30 +5,32 @@ public class ConnectFour {
         Tablero tablero = new Tablero();
         tablero.initializeBoard();
         Jugador jugador = new Jugador();
-        boolean gameWon = false;
-        int moves = 0;
         Scanner scanner = new Scanner(System.in);
-
-        while (!gameWon && moves < tablero.col * tablero.row) {
+        try{
+        while (!Check.getGameWon() && tablero.move()) {
             tablero.displayBoard();
 
-            int colChoice;
-            do {
-                System.out.println("Jugador " + jugador.currentPlayer + ", elige una columna (1-" + tablero.col + "): ");
-                colChoice = scanner.nextInt() - 1;
-            } while (!Jugador.isValidMove(tablero.board, colChoice));
+            int colChoice = 0;
+
+                do {
+                    System.out.println("Jugador " + jugador.currentPlayer + ", elige una columna (1-" + tablero.col + "): ");
+                    colChoice = scanner.nextInt() - 1;
+
+                } while (!Jugador.isValidMove(tablero.board, colChoice));
+
 
             Jugador.makeMove(tablero.board, colChoice, jugador.currentPlayer);
-
-            gameWon = Check.checkForWin(tablero.board, jugador.currentPlayer);
+            Check.checkForWin(tablero.board, jugador.currentPlayer);
             jugador.winner = jugador.currentPlayer;
-            jugador.currentPlayer = (jugador.currentPlayer == 'X') ? 'O' : 'X';
-            moves++;
+            jugador.switchPlayer();
+            tablero.addMove();
+        }}catch (Exception error){
+            System.out.println("error :" + error);
         }
 
         tablero.displayBoard();
 
-        if (gameWon) {
+        if (Check.getGameWon()) {
             System.out.println("¡Jugador " + jugador.winner + " gana!");
         } else {
             System.out.println("Empate. No hay ganador.");

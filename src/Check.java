@@ -1,4 +1,5 @@
 public class Check {
+    private static boolean gameWon = false;
 
     private static boolean horizontalCheck(char[][] board, char player) {
         for (int row = 0; row < board.length; row++) {
@@ -60,7 +61,14 @@ public class Check {
         return false;
     }
 
-    public static boolean checkForWin(char[][] board, char player) {
-        return horizontalCheck(board,player) || verticalCheck(board,player) || rightDiagonalCheck(board,player)|| leftDiagonalCheck(board,player);
+    public static void checkForWin(char[][] board, char player) {
+        if(horizontalCheck(board,player) || verticalCheck(board,player) || rightDiagonalCheck(board,player)|| leftDiagonalCheck(board,player)) {
+            gameWon = true;
+        }
     }
+
+    public static boolean getGameWon() {
+        return gameWon;
+    }
+
 }
